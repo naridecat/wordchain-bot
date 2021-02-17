@@ -19,9 +19,9 @@ WordChain-Bot is a discord wordchain game bot, written in Python
 2. Edit config.json file.
 ```json
 {
-    "token": "TOKEN", // Discord bot token
-    "prefix": "!", // Prefix+끝말잇기
-    "timeover" : 10 // Word input timeout (Default 10s)
+    "token": "TOKEN",
+    "prefix": "!",
+    "timeover" : 10
 }
 ```
 3. run bot.py
