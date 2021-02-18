@@ -28,4 +28,4 @@ WordChain-Bot is a discord wordchain game bot, written in Python
 
 ## Licence
 [Hangul-utils](https://github.com/kaniblu/hangul-utils) GPL-3.0 License<br>
-[KKuTu](https://github.com/JJoriping/KKuTu) GPL-3.0 License
+[KKuTu](https://github.com/JJoriping/KKuTu) AGPL-3.0 License
