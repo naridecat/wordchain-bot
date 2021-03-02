@@ -12,7 +12,7 @@ config = json.loads(open('config.json', 'r', encoding='utf-8').read())
 # 단어 개수 가져오기
 @client.event
 async def on_ready():
-    game = discord.Game(f"단어 {str(len(word))}개를 경험하고 있습니다")
+    game = discord.Game(config['status'])
     await client.change_presence(activity=game)
     print('ready')
 
@@ -28,15 +28,14 @@ async def wait(count, id, message):
 
 @client.event
 async def on_message(message):
-    if message.author.id in playing and message.author.id != client.user.id:
+    if message.author.id in playing and message.author.id != client.user.id and message.channel.id == user[message.author.id]['channel']:
+        async with message.channel.typing():
+            await asyncio.sleep(random.randint(0, config['timeover']*300) / 1000)
         jamo_txt = str(jamo.j2hcj(jamo.h2j(user[message.author.id]['this'][-1])))
         if jamo_txt.startswith("ㄹ"):
             jamo_char = [user[message.author.id]['this'][-1], hangulutils.join_jamos("ㄴ"+str(jamo_txt[1:]))]
         else:
             jamo_char = message.content[0]
-        print("jamo:"+str(jamo_char))
-        print(jamo_char)
-        print(user[message.author.id]['this'][-1])
         if user[message.author.id]['this'][-1] in jamo_char:
             if not message.content in user[message.author.id]['used']:
                 if message.content in word:
@@ -63,7 +62,6 @@ async def on_message(message):
                     except Exception as ex:
                         if message.author.id in playing:
                             playing.remove(message.author.id)
-                        print(ex)
                         if user[message.author.id]['count']:
                             embed = discord.Embed(title='게임승리', description=f"{message.author.display_name}\n`{str(user[message.author.id]['count'])}`")
                         await message.channel.send(embed=embed)    
@@ -81,9 +79,11 @@ async def on_message(message):
             user[message.author.id]['this'] = word[random.randint(0, len(word))]
             await message.channel.send("`"+message.author.display_name+"`\n**"+user[message.author.id]['this']+"**")
             user[message.author.id]['used'].append(user[message.author.id]['this'])
+            user[message.author.id]['channel'] = message.channel.id
             user[message.author.id]['count'] = 0
             user[message.author.id]['status'] = 0
             await wait(user[message.author.id]['count'], message.author.id, message)
+
         else:
             await message.channel.send("이미 게임중이잖아요!\n뭐하는거시에오 ㅇ0ㅇㅠㅠㅠ")
         
