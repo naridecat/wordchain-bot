@@ -1,5 +1,6 @@
 {
-    "token": "TOKEN",
+    "token": "token",
     "prefix": "!",
-    "timeover" : 10
+    "timeover" : 10,
+    "status": "Status"
 }
