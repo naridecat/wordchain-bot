@@ -21,10 +21,15 @@ WordChain-Bot is a discord wordchain game bot, written in Python
 {
     "token": "TOKEN",
     "prefix": "!",
-    "timeover" : 10
+    "timeover" : 10,
+    "status": "Status"
 }
 ```
 3. run bot.py
+
+## Version
+1.0 First Release
+1.1 Typing event added / bot answer delay added 
 
 ## Licence
 [Hangul-utils](https://github.com/kaniblu/hangul-utils) GPL-3.0 License<br>
